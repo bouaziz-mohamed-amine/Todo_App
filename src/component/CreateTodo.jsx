@@ -8,6 +8,7 @@ class CreateTodo extends Component {
             todo_responsible:'',
             todo_priority:'',
             todo_completed:false,
+            list:[{description:'amine',responsible:'bouaziz'},],
             
          }
     }
@@ -29,7 +30,10 @@ class CreateTodo extends Component {
     }
     onSubmitform=(e)=>{
         e.preventDefault();
-        alert(this.state.todo_description+'  '+this.state.todo_responsible+' '+this.state.todo_priority);
+        let amine ={description:this.state.todo_description,responsible:this.state.todo_responsible};
+        const lists =this.state.list;
+        lists.push(amine);
+        this.setState({list: lists})
         /**
          * this.setState({
             todo_description:'',
@@ -39,10 +43,18 @@ class CreateTodo extends Component {
         });
          */
     }
+    
 
     render() { 
         return (
 <div style={{marginTop:'20px'}}>
+    {
+        this.state.list.map(c => (
+        <div>
+            <div>{c.description}</div>
+            <div>{c.responsible}</div>
+        </div>))
+    }
    <h3>Create New Todo</h3>
    <form onSubmit={this.onSubmitform}>
       <div className='form-group'>
@@ -92,7 +104,7 @@ class CreateTodo extends Component {
         </div>
       </div>        
       <button type='submit' className='btn btn-outline-primary mt-3' >Submit</button>           
-   </form>
+   </form>  
    <p>{this.state.todo_responsible}</p>
 </div> );
     }
