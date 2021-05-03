@@ -14,7 +14,8 @@ import icon from './images/icon.png'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {
+      }
   }
   render() { 
     return (
@@ -42,6 +43,7 @@ class App extends Component {
        
   <Switch>
   <Route path='/' exact component={TodosList}/>
+  <Route path='/todos' exact component={TodosList}/>
   <Route path='/edit/:id' exact component={EditTodo}/>
   <Route path='/create' exact component={CreateTodo}/>
   </Switch>

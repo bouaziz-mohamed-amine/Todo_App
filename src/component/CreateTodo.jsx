@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class CreateTodo extends Component {
@@ -7,12 +8,8 @@ class CreateTodo extends Component {
             todo_description:'',
             todo_responsible:'',
             todo_priority:'',
-            todo_completed:false,
-            list:[{description:'amine',responsible:'bouaziz'},],
-            
          }
     }
-    
     onChangeTodoDescription=(e)=>{
         this.setState({
             todo_description:e.target.value,
@@ -30,31 +27,20 @@ class CreateTodo extends Component {
     }
     onSubmitform=(e)=>{
         e.preventDefault();
-        let amine ={description:this.state.todo_description,responsible:this.state.todo_responsible};
-        const lists =this.state.list;
-        lists.push(amine);
-        this.setState({list: lists})
-        /**
-         * this.setState({
-            todo_description:'',
-            todo_responsible:'',
-            todo_priority:'',
-            todo_completed:false,    
-        });
-         */
+        let newtodo ={
+            todo_description:this.state.todo_description,
+            todo_responsible:this.state.todo_responsible,
+            todo_priority :this.state.todo_priority,
+            todo_completed : 0,
+        };
+        axios.post('http://192.168.1.5/api/create/todo',newtodo);
+        
     }
-    
 
     render() { 
         return (
 <div style={{marginTop:'20px'}}>
-    {
-        this.state.list.map(c => (
-        <div>
-            <div>{c.description}</div>
-            <div>{c.responsible}</div>
-        </div>))
-    }
+   
    <h3>Create New Todo</h3>
    <form onSubmit={this.onSubmitform}>
       <div className='form-group'>
@@ -80,7 +66,7 @@ class CreateTodo extends Component {
                    value="Low"
                    checked={this.state.todo_priority==='Low'} 
                    onChange={this.onChangeTodoPriority}/>
-            <label className="form-check-label" >Low</label>
+            <label className="form-check-label" >Low </label>
         </div>
         <div className="form-check form-check-inline">
             <input className="form-check-input"
@@ -90,9 +76,9 @@ class CreateTodo extends Component {
                    value="Medium"
                    checked={this.state.todo_priority==='Medium'} 
                    onChange={this.onChangeTodoPriority}/>
-            <label className="form-check-label" >Medium</label>
+            <label className="form-check-label" >Medium </label>
         </div>
-        <div className="form-check form-check-inline ">
+        <div className="form-check form-check-inline" >
             <input className="form-check-input"
                    type="radio" 
                    name="priorityOptions" 
@@ -100,12 +86,11 @@ class CreateTodo extends Component {
                    value="High"
                    checked={this.state.todo_priority==='High'} 
                    onChange={this.onChangeTodoPriority}/>
-            <label className="form-check-label">High</label>
+            <label className="form-check-label">High </label>
         </div>
       </div>        
       <button type='submit' className='btn btn-outline-primary mt-3' >Submit</button>           
    </form>  
-   <p>{this.state.todo_responsible}</p>
 </div> );
     }
 }
